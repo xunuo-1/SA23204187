@@ -1,0 +1,106 @@
+---
+title: "Testing the Pareto Model versus the Stretched-Exponential Model"
+author: "Deyu He"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Testing the Pareto Model versus the Stretched-Exponential Model}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Overview
+
+__SA23204187__ is a simple R package testing the Pareto Model versus the Stretched-Exponential Model. Three functions are considered, namely, _Paretomle_ (generate the mle of Pareto distribution), _SEmle_ (generate the approximate mle of Stretched-Exponential distribution) and _hytest_ (test Pareto versus Stretched-Exponential by wilks statistics). For test function, both R and Rcpp versions are produced. Namely _hytest_ for R and _wilks_ for C++.
+
+## the mle of  Pareto distribution and the approximate mle of Stretched-Exponential distribution
+
+```{r,eval=FALSE}
+Paretomle <- function(x,u){
+  N <- length(x)
+  beta <- 0
+  for (i in 1:N){
+    beta <- beta + log(x[i]/u)
+  }
+  betahat <- N/beta
+  supL0 <- -N*(1+log(u)+(1/betahat)-log(betahat))
+  return(supL0)
+}
+```
+
+
+```{r,eval=FALSE}
+SEmle <- function(x,u){
+  N <- length(x)
+  k1 <- k2 <- b <- b1 <- 0
+  for (i in 1:N){
+    b1 <- b1 + log(x[i]/u)
+    k1 <- k1 + (log(x[i]/u))^2
+    k2 <- k2 + (log(x[i]/u))^3
+  }
+  chat <- (k1/2 - b1^2)/(b1*k1/2 - k2/3) 
+  for (j in 1:N){
+    b <- b + (x[i]/u)^chat
+  }
+  bhat <- chat * (N/(b-N))
+  supL1 <- -N*(1+log(u)-(chat-1)*b1/N-log(bhat))
+  return(supL1)
+}
+```
+
+
+
+The R package 'microbenchmark' can be used to benchmark the above R and C++ functions.
+
+## Benchmarking _hytest_ and _wilks_
+
+The source R code for _hytest_ is as follows:
+```{r,eval=FALSE}
+function(x,u,alpha){
+  N <- length(x)
+  k1 <- k2 <- b1 <- 0
+  for (i in 1:N){
+    b1 <- b1 + log(x[i]/u)
+    k1 <- k1 + (log(x[i]/u))^2
+    k2 <- k2 + (log(x[i]/u))^3
+  }
+  chat <- (k1/2 - b1^2)/(b1*k1/2 - k2/3) 
+  wsta <- 2 * N * (chat)^2 * (k2/(6*b1) - k1/2 + (k1/b1)^2/8)
+  ifelse(wsta > qchisq(1-alpha,1),"reject the null hypothesis","do not reject the null hypothesis")
+  
+}
+```
+
+The above code involves 'ifelse' and 'for', which are known to be slow. On the other hand, the following _wilks_ code is much faster.
+
+```{r,eval=FALSE}
+double wilks(
+    NumericVector x, int u) {
+  double k1 = 0.0,k2 = 0.0,b1 = 0.0,chat = 0.0,wsta = 0.0;
+  int n = x.size();
+  for(int i = 0; i < n; ++i) {
+    b1 += log(x[i] / u );
+    k1 += pow(log(x[i] / u),2);
+    k2 += pow(log(x[i] / u),3);
+  }
+  chat = -(k1/2-pow(b1,2))/(b1*k1/2-k2/3);
+  wsta = 2 * n * pow(chat,2) * (k2/(6*b1) - k1/2 + pow(k1/b1,2)/8);
+  return wsta;
+}
+```
+
+In order to empirically benchmark _hytest_ and _wilks_, we just arbitratyly create a vector.The R code for benchmark _hytest_ and _wilks_ is as follows.
+
+```{r,eval=TRUE}
+library(SA23204187)
+library(microbenchmark)
+tm1 <- microbenchmark::microbenchmark(
+   rnR = hytest(c(10,12,23,2,4,5,6,5,4,7,8,6),1,0.05),
+   rnC = wilks(c(10,12,23,2,4,5,6,5,4,7,8,6),1)
+)
+print(summary(tm1)[,c(1,3,5,6)])
+```
+
+The above results show an evident computational speed gain of C++ against R.
+
+
