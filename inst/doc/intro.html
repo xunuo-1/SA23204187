@@ -430,9 +430,9 @@ we just arbitratyly create a vector.The R code for benchmark
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>   <span class="at">rnC =</span> <span class="fu">wilks</span>(<span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">12</span>,<span class="dv">23</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">6</span>),<span class="dv">1</span>)</span>
 <span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>)</span>
 <span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(tm1)[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">6</span>)])</span></code></pre></div>
-<pre><code>##   expr    lq median     uq
-## 1  rnR 6.202  6.401 6.6510
-## 2  rnC 1.901  2.001 2.2015</code></pre>
+<pre><code>##   expr     lq median      uq
+## 1  rnR 9.5010 9.9005 10.4505
+## 2  rnC 5.0015 5.3010  5.8520</code></pre>
 <p>The above results show an evident computational speed gain of C++
 against R.</p>
 </div>

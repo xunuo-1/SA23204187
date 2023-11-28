@@ -13,6 +13,6 @@
 #' }
 #' @export
 wilks <- function(x, u) {
-    .Call('_SA23204187_wilks', PACKAGE = 'SA23204187', x, u)
+    .Call('_SA23204187_wilks', x, u)
 }
 
