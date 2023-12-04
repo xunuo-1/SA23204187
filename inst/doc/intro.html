@@ -12,7 +12,7 @@
 
 <meta name="author" content="Deyu He" />
 
-<meta name="date" content="2023-11-28" />
+<meta name="date" content="2023-12-04" />
 
 <title>Testing the Pareto Model versus the Stretched-Exponential Model</title>
 
@@ -341,7 +341,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">Testing the Pareto Model versus the
 Stretched-Exponential Model</h1>
 <h4 class="author">Deyu He</h4>
-<h4 class="date">2023-11-28</h4>
+<h4 class="date">2023-12-04</h4>
 
 
 
@@ -430,9 +430,9 @@ we just arbitratyly create a vector.The R code for benchmark
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>   <span class="at">rnC =</span> <span class="fu">wilks</span>(<span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">12</span>,<span class="dv">23</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">6</span>),<span class="dv">1</span>)</span>
 <span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>)</span>
 <span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(tm1)[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">6</span>)])</span></code></pre></div>
-<pre><code>##   expr     lq median      uq
-## 1  rnR 9.5010 9.9005 10.4505
-## 2  rnC 5.0015 5.3010  5.8520</code></pre>
+<pre><code>##   expr  lq median   uq
+## 1  rnR 6.1    6.3 6.45
+## 2  rnC 3.3    3.6 3.90</code></pre>
 <p>The above results show an evident computational speed gain of C++
 against R.</p>
 </div>

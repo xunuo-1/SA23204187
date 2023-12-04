@@ -9,7 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r,eval=FALSE}
+```{r}
 library(ggplot2)
 library(bootstrap)
 library(boot)
@@ -29,7 +29,7 @@ example 1:
 The first example describes the ratio of men to women in my master's class
 
 ```{r,eval=FALSE}
-library(plotrix)
+
 #Number of male and female students in the master's class
 x = c(13,32)
 #Enter labels
@@ -47,14 +47,14 @@ example 2:
 
 Plot a table of coefficients of the regression equation for y = x^3
 
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 x <- 1:10
 y <- x^3
 lmr <- lm(y~x)
 co <- summary(lmr)$coefficients
 title <- expression(y == x^3)
-result <- knitr::kable(co,digits = 2,align = 'c',caption = title)
-plot(x,y,caption = "title")
+result <- knitr::kable(co,digits = 2,align = 'c')
+plot(x,y)
 abline(lmr,col="red")
 result
 ```
@@ -63,7 +63,7 @@ example 3:
 
 Map the distribution of experience.Data is arbitrary data.
 
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 
 dat <- c(10,22,30,40,55,56,80,94)
 fun_table <- function(x){x <- sort(x) 
@@ -91,7 +91,7 @@ Inverse transformation method is used to reproduce some parameter functions of t
 
 In this chunk,reproduce the function of argument "replace" in sample.
 
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 #Take the same parameters as the sample function
 newsample <- function(x,size,replace = FALSE,prob = NULL){
   if (replace == TRUE){         #sample with replacement
@@ -132,7 +132,7 @@ Use the inverse transform method to generate a random sample of size 1000 from L
 
 ## Answer
 
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 set.seed(1234)
 n <- 1000
 result <- vector()   #generate numbers
@@ -162,7 +162,7 @@ Write a function to generate a random sample of size n from the Beta(a, b) distr
 
 ## Answer
 
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 
 # creat the function
 betasample <- function(n,a,b){
@@ -195,7 +195,7 @@ Write a function to generate random variates from f=3*(1-x^2)/4,|x|<=1, and cons
 
 ## Answer
 
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 Ekernel <- function(n){
   u1 <- runif(n,-1,1)
   u2 <- runif(n,-1,1)
@@ -254,7 +254,7 @@ Take three different values of $ρ$ ($0 ≤ ρ ≤ 1$, including $ρ_{min}$) and
 
 ## Answer
 
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 niddle.var <- function(l){
   d <- 1
   m <- 1e6
@@ -304,7 +304,7 @@ $$\widehat{\theta}=\frac{2}{m}\sum_{j=1}^{\frac{m}{2}}(e^{U_j}+e^{(1-U_j)})$$
 $$Var(\widehat{\theta})=\frac{2*(10e-5-3e^2)}{m}$$
 the percent reduction in variance of $\widehat{\theta}$
 $$100\frac{\frac{e^2-1}{2m}-\frac{2*(10e-5-3e^2)}{m}}{\frac{e^2-1}{2m}}$$
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 #the result is
 1-4*(10*exp(1)-5-3*exp(2))/(exp(2)-1)
 ```
@@ -315,7 +315,7 @@ Refer to Exercise 5.6. Use a Monte Carlo simulation to estimate $\theta$ by the 
 
 ## Answer
 
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 #simple mC
 MC.SIMPLE <- function(n){
   x <- runif(n)
@@ -375,7 +375,7 @@ The chosen functions $f_1$ and $f_2$ are:
 $$f_1(x)=\frac{1}{2}e^{-\frac{x}{2}},x>0$$
 $$f_2(x)=\frac{1}{16}x^2e^{-\frac{x}{2}}\sim{}Ga(3,\frac{1}{2}),x>0$$
 Firstly,we use
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 m <- 10000
 theta.hat <- se <-numeric(2)
 g <- function(x){
@@ -412,7 +412,7 @@ Obtain a Monte Carlo estimate of $$\int_1^{\infty}\frac{x^2}{\sqrt{2\pi}}e^{-x^2
 ## Answer
 
 From 5.13,we can see $f_1$ is a better choice.
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 g <- function(x){
   (x^2)*exp(-x^2/2)/(sqrt(2*pi))*(x>1)
 }
@@ -434,7 +434,7 @@ Obtain the stratified importance sampling estimate in Example 5.13 and compare i
 
 ## Answer
 
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 M <- 10000
 k <- 5    #stratified numbers
 estimate <- numeric(k) #estimates
@@ -466,7 +466,7 @@ Use a Monte Carlo experiment to estimate the coverage probability of the t-inter
 ## Answer
 
 As we konw ,$X_1,...X_n$ iid copies of $\chi^2(2)$,$EX=2$
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 n <- 20
 alpha <- 0.05
 k <- 1000
@@ -509,7 +509,7 @@ Discuss the simulation results for the cases where the sampled population is
 
 ## Answer
 
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 
 n <- 20
 alpha <- 0.05
@@ -546,7 +546,7 @@ Considering $m=1000$ hypotheses, under the null hypothesis, the $p\sim{}U(0,1)$,
 
 ## Answer
 
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 m <- 1000
 alpha <- 0.1
 #generate p-value
@@ -619,7 +619,7 @@ Compare the mean bootstrap bias and bootstrap standard error with the theoretica
 
 ## Answer
 
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 # theoretical bias and se
 theoretical <- function(n,lambda){
   bias <- lambda/(n-1)
@@ -668,7 +668,7 @@ Obtain a bootstrap t confidence interval estimate for the correlation statistic 
 
 ## Answer
 
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 
 data(law,package = "bootstrap")
 boot.t.ci <-
@@ -711,9 +711,9 @@ Compute 95% bootstrap confidence intervals for the mean time between failures $\
 
 ## Answer
 
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 
-library(boot)
+
 n <- 10;
 m <- 1000
 obser <- c(3,5,7,18,43,85,91,98,100,130,230,487)
@@ -744,8 +744,7 @@ Refer to Exercise 7.7. Obtain the jackknife estimates of bias and standard error
 
 ## Answer
 
-```{r,eval=FALSE}
-library(bootstrap)
+```{r,warning=FALSE}
 attach(scor)
 data <- as.matrix(scor)
 n <- length(data[,1])
@@ -769,7 +768,7 @@ In Example 7.18,leave-one-out(n-fold) cross validation was used to select the be
 
 ## Answer
 
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 
 attach(ironslag)
 set.seed(1234)
@@ -806,14 +805,16 @@ for (k in 1:n){
 }
 c(mean(e1^2),mean(e2^2),mean(e3^2),mean(e4^2))
 ```
+
 We can see that L2 is the best model.
+
 ```{r,eval=FALSE}
-par(mfrow = c(2,2))
+
 plot(L2$fit, L2$res)#residuals vs fitted values
 abline(0, 0)        #reference line
 qqnorm(L2$res)      #normal probability plot
 qqline(L2$res)      #reference line
-par(mfrow = c(1,1))
+
 ```
 
 ## Question
@@ -841,7 +842,7 @@ Implement the two-sample Cramér-von Mises test for equal distributions as a per
 
 ## Answer
 
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 set.seed(123)
 attach(chickwts)
 x <- sort(as.vector(weight[feed == "soybean"]))
@@ -897,7 +898,7 @@ The Count 5 test for equal variances in Section 6.4 is based on the maximum numb
 
 ## Answer
 
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 set.seed(1234)
 c5t <- function(x,y){
   n <- length(x)
@@ -966,7 +967,7 @@ Consider a model $P(Y=1|X_1,X_2,X_3)=\frac{exp(a+b_1X_1+b_2X_2+b_3X_3)}{1+exp(a+
 
 ## Answer
 
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 set.seed(12345)
 ln <- function(N,b1,b2,b3,f0){
   x1 <- rpois(N,1)
@@ -999,7 +1000,7 @@ Implement a random walk Metropolis sampler for generating the standard Laplace d
 
 ## Answer
 
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 set.seed(12345)
 f <- function(x) (exp(-abs(x)))/2
 set.seed(12345)
@@ -1032,16 +1033,16 @@ acceptance <- data.frame(sigma=sigma,acceptance=c(rw1$k, rw2$k, rw3$k, rw4$k))
 knitr::kable(acceptance)
 ```
 Compare the chains by the line plot.
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 
-    par(mfrow=c(2,2))  #display 4 graphs together
-    rw <- cbind(rw1$x, rw2$x, rw3$x,  rw4$x)
-    for (j in 1:4) {
-        plot(rw[,j], type="l",
-             xlab=bquote(sigma == .(round(sigma[j],3))),
-             ylab="X", ylim=range(rw[,j]))
-    }
-    par(mfrow=c(1,1)) #reset to default
+
+rw <- cbind(rw1$x, rw2$x, rw3$x,  rw4$x)
+for (j in 1:4) {
+    plot(rw[,j], type="l",
+          xlab=bquote(sigma == .(round(sigma[j],3))),
+          ylab="X", ylim=range(rw[,j]))
+}
+
     
 ```
 We can see that the chain in the third plot($\sigma=4$) is mixing well and converging to the target distribution after a short period.
@@ -1052,7 +1053,7 @@ Implement a Gibbs sampler to generate a bivariate normal chain $(X_t, Y_t)$ with
 
 ## Answer
 
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 #initialize constants and parameters
 N <- 5000 #length of chain
 burn <- 1000 #burn-in length
@@ -1079,7 +1080,7 @@ x <- X[b:N, ]
 plot(x, main="", cex=.5, xlab=bquote(X[1]),ylab=bquote(X[2]), ylim=range(x[,2]))
 ```
 Now fit  the simple linear regression model
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 Y <- x[,2]
 X <- x[,1]
 dat <- data.frame(x)
@@ -1088,7 +1089,7 @@ lreg <- lm(Y~X,data=dat)
 res <- residuals(lreg)
 shapiro.test(res) # p value > 0.05,we do not reject the null hypothesis
 #plot(density(res))
-par(mfrow=c(2,2))
+
 plot(lreg)
 ```
 Thus,the residuals have the normality and constant variance.
@@ -1099,7 +1100,7 @@ Refer to Example 9.1. Use the Gelman-Rubin method to monitor convergence of the 
 
 ## Answer
 
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 f <- function(x, sigma) {
   if (any(x < 0)) return (0)
   stopifnot(sigma > 0)
@@ -1119,7 +1120,7 @@ Gelman.Rubin <- function(psi) {
     v.hat <- W*(n-1)/n + (B/n)     #upper variance est.
     r.hat <- v.hat / W             #G-R statistic
     return(r.hat)
-    }
+}
 
 chisq.chain <- function(sigma, N){
     #with chisq(df=x) proposal distribution
@@ -1161,11 +1162,11 @@ for (i in 1:k)
   }else{
   lines(psi[i, (b+1):n], col=i)
   }
-par(mfrow=c(1,1))
+
 ```
 
 
-```{r,eval=FALSE}
+```{r,warning=FALSE}
     
     #plot the sequence of R-hat statistics
     rhat <- rep(0, n)
@@ -1199,7 +1200,7 @@ Thus,H($\lambda$) is a decreasing function,so when set $\lambda^*$ $s.t.$
 $$H(\lambda)=-\Sigma_{i=1}^{n}u_i+\Sigma_{i=1}^{n}\frac{-(u_i-v_i)e^{\lambda(u_i-v_i)}}{1-e^{\lambda(u_i-v_i)}}=0$$
 we get the mle $\lambda^*$
 $$H(\lambda)=\frac{d}{d\lambda}l(\lambda)=-\Sigma_{i=1}^{n}u_i+\Sigma_{i=1}^{n}\frac{-(u_i-v_i)e^{\lambda(u_i-v_i)}}{1-e^{\lambda(u_i-v_i)}}$$
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 #mle generates the numerical solution
 #compute log likelihood function root
 obj.lambda <- function(left,right,lambda){
@@ -1248,7 +1249,7 @@ $$f'(\lambda)=\frac{n\{\Sigma_{i=1}^{n} [-\frac{1}{\lambda^2}+\frac{(u_i-v_i)^2e
 Take $H(\lambda)=\Sigma_{i=1}^{n} [-v_i + \frac{v_i - u_i}{1-e^{\lambda(u_i-v_i)}}]=0$ and $\lambda = \frac{n}{\Sigma_{i=1}^{n} [\frac{1}{\lambda}+\frac{u_ie^{-\lambda u_i}-v_ie^{-\lambda v_i}}{e^{-\lambda u_i}-e^{-\lambda v_i}}]}$ into the equation of $f'(\lambda)$,we have $f'(\lambda)=0$
 In summary, the convergence of EM algorithm to MLE results and has the linear convergence rate.
 
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 set.seed(1234)
 N <- 10000 #number of iterations
 L <- 1  #set initial lambda 
@@ -1274,7 +1275,7 @@ Consider the solution of game B=A+2 in Morra game and verify if it is the extrem
 
 ## Answer
 
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 solve.game <- function(A) {
 #let elements in A are positive
 smallA <- min(A)
@@ -1337,7 +1338,7 @@ Why use $unlist()$ to convert a list to an atomic vector rather than $as.vector(
 
 Because when the elements of a list have different types, $unlist()$ uses the same coercion rules as $c()$.$as.vector()$ makes every element to be a list.
 For example,
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 x <- list(1,"we")
 y <- unlist(x)
 z <- as.vector(x)
@@ -1353,14 +1354,14 @@ print(c(typeof(z[1]),typeof(z[2])))
 ## Answer
 
 (1)
-```{r,eval=FALSE}
+```{r}
 x <- c(1,2,3,4)
 dim(x)
 ```
 We can see that the result is NULL.
 
 (2)
-```{r,eval=FALSE}
+```{r}
 x <- matrix(c(1,2,3,4),2,2)
 is.matrix(x)
 is.array(x)
@@ -1375,7 +1376,7 @@ We can see that the result is also TRUE.
 ## Answer
 
 (1)
-```{r,eval=FALSE}
+```{r}
 cy <- list("a","ah")
 df <- data.frame(x=1:2,y=I(cy))
 str(df)
@@ -1385,7 +1386,7 @@ typeof(k[2,2])
 ```
 Each element of the matrix corresponds to each element of the data frame and remains of the original type.
 (2)
-```{r,eval=FALSE}
+```{r}
 df <- data.frame(x=1,y=1:10)
 d0 <- df[FALSE,]
 d1 <- df[,FALSE]
@@ -1399,7 +1400,7 @@ The function below scales a vector so it falls in the range $[0,1]$.Apply it to 
 
 ## Answer
 
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 scale01 <- function(x) {
 rng <- range(x, na.rm = TRUE)
 (x - rng[1]) / (rng[2] - rng[1])
@@ -1466,7 +1467,7 @@ Use the Gibbs sampler to generate a chain with target joint density $f(x, y)$ an
 ## Answer
 
 1)R function
-```{r,eval=FALSE}
+```{r,warning=FALSE}
 #set initial value
 gr <-function(N,M){
 x <- matrix(0,M,2)
